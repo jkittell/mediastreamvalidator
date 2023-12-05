@@ -30,7 +30,6 @@ func getInstance() db {
 		lock.Lock()
 		defer lock.Unlock()
 		if contents.Database == nil {
-			log.Println("creating new contents database")
 			contents.Database = array.New[*mediastreamvalidator.StreamValidator]()
 		}
 	}
@@ -128,8 +127,10 @@ func validate(content *mediastreamvalidator.StreamValidator) {
 			}(f.Name())
 
 			var arguments []string
-			arguments = append(arguments, "-t")
-			arguments = append(arguments, "30")
+			if !strings.Contains(content.URL, ".m4m") {
+				arguments = append(arguments, "-t")
+				arguments = append(arguments, "60")
+			}
 			arguments = append(arguments, fmt.Sprintf("--validation-data-path=%s", f.Name()))
 			arguments = append(arguments, content.URL)
 
