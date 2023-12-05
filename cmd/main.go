@@ -102,7 +102,7 @@ func validate(content *mediastreamvalidator.StreamValidator) {
 		log.Println("skip mediastreamvalidator for dash", nil)
 		content.Status = "skipped"
 	} else {
-		content.Status = "processing"
+		content.Status = "started"
 		// verify mediastreamvalidator available on server
 		exe, err := exec.LookPath("mediastreamvalidator")
 		if err != nil {
